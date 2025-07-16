@@ -8,8 +8,18 @@ const mongoose = require('mongoose');
     date         : ISODate
   }
 */
-module.exports = mongoose.model('Comment', new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   complaint_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Complaint', required: true },
   text:         { type: String, required: true },
   date:         { type: Date,   default: Date.now },
-}));
+});
+
+// Eliminar `__v` de las respuestas JSON
+commentSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;  
+    return ret;       
+  }
+});
+
+module.exports = mongoose.model('Comment', commentSchema);

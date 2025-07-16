@@ -13,7 +13,8 @@ const mongoose = require('mongoose');
     likes       : 3
   }
 */
-module.exports = mongoose.model('Complaint', new mongoose.Schema({
+
+const complaintSchema = new mongoose.Schema({
   title:       { type: String, required: true },
   description: { type: String, required: true },
   category:    { type: String, required: true },
@@ -22,4 +23,14 @@ module.exports = mongoose.model('Complaint', new mongoose.Schema({
   date:        { type: Date,   default: Date.now },
   hashtags:    [String],
   likes:       { type: Number, default: 0 },
-}));
+});
+
+// Eliminar `__v` de las respuestas JSON
+complaintSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;  
+    return ret;       
+  }
+});
+
+module.exports = mongoose.model('Complaint', complaintSchema);

@@ -17,6 +17,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/complaints', require('./routes/complaintRoutes'));
 app.use('/api/comments', require('./routes/commentRoutes'));
+app.use('/api/auth',require('./routes/userRoutes'));
 
 
 const Complaint = require('./models/Complaint');
