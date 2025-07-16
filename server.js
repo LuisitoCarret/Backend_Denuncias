@@ -7,9 +7,9 @@ const path = require('path');
 
 
 const corsOptions ={
-  origin: 'http:localhost:3000',
-  methods: 'GET,POST,PATCH,DELETE,UPDATE',
-  allowHeaders:'Content-Type,Authorization'
+  origin: '*',
+  methods: '*',
+  allowHeaders:'*'
 }
 
 const app = express();
