@@ -5,22 +5,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
-// Configuración de CORS modularizada
-const configureCors = () => {
-  const allowedOrigins = [
-    'http://localhost:3000/register',  // Origen local de desarrollo
-    'https://mi-frontend.vercel.app'  // Origen de producción
-  ];
 
   const corsOptions = {
     origin: '*',
-    methods: 'GET,POST,PATCH,DELETE,UPDATE', 
-    allowedHeaders: 'Content-Type,Authorization',  
+    methods: '*', 
+    allowedHeaders: '*',  
     credentials: true,  
-  };
-
-  return corsOptions;
-};
+  }
 
 const app = express();
 
@@ -29,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Aplicar CORS
-app.use(cors(configureCors()));  // Aplicamos la configuración modularizada
+app.use(cors(corsOptions));  // Aplicamos la configuración modularizada
 app.use(express.json()); 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
