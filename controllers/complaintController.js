@@ -1,16 +1,27 @@
 const Complaint = require('../models/Complaint');
+const upload = require('../multer'); // Importamos el middleware de Multer
+
 
 // POST /api/complaints
 exports.createComplaint = async (req, res) => {
   try {
+
+  // Usamos Multer para recibir archivos
+    upload.array('evidence', 2)(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: 'Error al subir el archivo', detail: err.message });
+      }
+
     const {
       title,
       description,
       category,
-      evidence = [],       
       location,
       hashtags = ''
     } = req.body;
+
+      const evidence = req.files.map(file => `/evidence/${file.filename}`);
+
 
     const newComplaint = await Complaint.create({
       title,
@@ -22,6 +33,7 @@ exports.createComplaint = async (req, res) => {
     });
 
     res.status(201).json(newComplaint);
+    });
   } catch (err) {
     res.status(400).json({ error: 'Datos inválidos o incompletos', detail: err.message });
   }

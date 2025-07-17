@@ -12,6 +12,9 @@ const commentSchema = new mongoose.Schema({
   complaint_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Complaint', required: true },
   text:         { type: String, required: true },
   date:         { type: Date,   default: Date.now },
+  user_id:      { type: mongoose.Schema.Types.ObjectId, ref: 'User', require: true}
+},{
+  versionKey : false
 });
 
 // Eliminar `__v` de las respuestas JSON

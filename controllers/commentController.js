@@ -2,19 +2,24 @@ const Comment = require('../models/Comment');
 
 // POST /api/comments/:complaintId
 exports.createComment = async (req, res) => {
-  const { complaintId } = req.params;
-  const { text } = req.body;
+  const { complaint_id, text, user_id } = req.body;
 
   try {
+    // Crear nuevo comentario
     const newComment = new Comment({
-      complaint_id: complaintId,
-      text
+      complaint_id,
+      text,
+      user_id,  // Asociar el `user_id` con el comentario
     });
 
     await newComment.save();
-    res.status(201).json(newComment);
+
+    res.status(201).json({
+      message: 'Comentario creado exitosamente',
+      comment: newComment,
+    });
   } catch (err) {
-    res.status(400).json({ error: 'Error al crear comentario', detail: err.message });
+    res.status(500).json({ error: 'Error al crear el comentario', detail: err.message });
   }
 };
 

@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
   }
 */
 
+// 📌 Esquema con versionKey desactivado
 const complaintSchema = new mongoose.Schema({
   title:       { type: String, required: true },
   description: { type: String, required: true },
@@ -23,13 +24,16 @@ const complaintSchema = new mongoose.Schema({
   date:        { type: Date,   default: Date.now },
   hashtags:    [String],
   likes:       { type: Number, default: 0 },
+}, {
+  versionKey: false // ❌ Elimina "__v" completamente
 });
 
-// Eliminar `__v` de las respuestas JSON
+// (Opcional) Transformar la salida JSON
 complaintSchema.set('toJSON', {
   transform: (doc, ret) => {
-    delete ret.__v;  
-    return ret;       
+    ret.id = ret._id;     // ✅ Renombrar _id a id (opcional)
+    delete ret._id;       // ✅ Ocultar _id original
+    return ret;
   }
 });
 
