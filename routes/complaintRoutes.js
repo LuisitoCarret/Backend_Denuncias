@@ -7,7 +7,7 @@ const {
   getComplaintById
 } = require('../controllers/complaintController');
 
-router.post('/', createComplaint);
+router.post('/new', createComplaint);
 router.get('/',  listComplaints);
 router.patch('/:id', updateComplaint);
 router.delete('/:id', deleteComplaint);
